@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 import os
 
-from bottle import post, request, run, hook, template, route
+from bottle import get, post, request, run, hook, template, route
 
 from howdoi import howdoi
 
@@ -10,6 +10,11 @@ from howdoi import howdoi
 def strip_path():
     request.environ['PATH_INFO'] = request.environ['PATH_INFO'].rstrip('/')
     
+    
+@route('/hello')
+def hello():
+    name = request.cookies.username or 'Guest'
+    return template('Hello {{name}}', name=name)
     
 @route('/hdi/<query>')
 def hdi_handler():
