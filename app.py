@@ -11,10 +11,24 @@ def strip_path():
     request.environ['PATH_INFO'] = request.environ['PATH_INFO'].rstrip('/')
     
     
-@route('/hello')
-def hello():
-    name = request.cookies.username or 'Guest'
-    return template('Hello {{name}}', name=name)
+@route('/h/<query>')
+def h():
+     text = query
+
+    # adding default params
+    args = {
+        'query': text.split(),
+        'pos': 1,
+        'all': False,
+        'link': False,
+        'clear_cache': False,
+        'version': False,
+        'num_answers': 1,
+        'color': False,
+    }
+
+    output = howdoi.howdoi(args)
+    return template('Found it: {{output}}', output)
     
 @route('/hdi/<query>')
 def hdi_handler():
