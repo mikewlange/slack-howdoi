@@ -9,7 +9,30 @@ from howdoi import howdoi
 @hook('before_request')
 def strip_path():
     request.environ['PATH_INFO'] = request.environ['PATH_INFO'].rstrip('/')
+    
+    
+@route('/hdi/<query>')
+def howdoi_handler():
+    """
+    Example:
+        /howdoi open file python
+    """
+    text = query
 
+    # adding default params
+    args = {
+        'query': text.split(),
+        'pos': 1,
+        'all': False,
+        'link': False,
+        'clear_cache': False,
+        'version': False,
+        'num_answers': 1,
+        'color': False,
+    }
+
+    output = howdoi.howdoi(args)
+    return output
 
 @post('/howdoi')
 def howdoi_handler():
