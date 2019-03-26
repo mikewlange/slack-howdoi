@@ -12,7 +12,7 @@ def strip_path():
     
     
 @route('/hdi/<query>')
-def howdoi_handler():
+def hdi_handler():
     """
     Example:
         /howdoi open file python
