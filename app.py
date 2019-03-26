@@ -12,9 +12,12 @@ def strip_path():
     
     
 @route('/h/<query>')
-def h():
-     text = query
-
+def h_handler():
+    """
+    Example:
+        /howdoi open file python
+    """
+    text = query
     # adding default params
     args = {
         'query': text.split(),
@@ -28,7 +31,7 @@ def h():
     }
 
     output = howdoi.howdoi(args)
-    return template('Found it: {{output}}', output)
+    return template(output)
     
 @route('/hdi/<query>')
 def hdi_handler():
