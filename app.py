@@ -62,9 +62,9 @@ def howdoi_handler():
     Example:
         /howdoi open file python
     """
-    text = request.forms.text
-    if not text:
-        return 'Please type a ?text= param'
+    postdata = request.body.read()
+    print postdata
+    text = postdata
 
     # adding default params
     args = {
