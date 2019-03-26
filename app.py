@@ -63,7 +63,6 @@ def howdoi_handler():
         /howdoi open file python
     """
     postdata = request.body.read()
-    print postdata
     text = postdata
 
     # adding default params
