@@ -2,8 +2,12 @@
 import os
 
 from bottle import get, post, request, run, hook, template, route
+import subprocess
 
 from howdoi import howdoi
+import sys
+# Test this command in a dos window if you are having trouble.
+HOW_DO_I_COMMAND =  'python -m howdoi.howdoi'
 
 
 @hook('before_request')
@@ -83,9 +87,29 @@ def howdoi_handler():
 
 @route('/')
 def index():
-    return template('index')
+    QueryHowDoI(query)
+   
 
-
+def QueryHowDoI():
+    '''
+    Kicks off a subprocess to send the 'Query' to HowDoI
+    Prints the result, which in this program will route to a gooeyGUI window
+    :param Query: text english question to ask the HowDoI web engine
+    :return: nothing
+    '''
+    
+    Query = "Rreverse a string in python"
+    howdoi_command = HOW_DO_I_COMMAND
+    full_text_option = ' -a' 
+    t = subprocess.Popen(howdoi_command + ' \"'+ Query + '\" -n ' + str(1)+full_text_option, stdout=subprocess.PIPE)
+    (output, err) = t.communicate()
+    print('{:^88}'.format(Query.rstrip()))
+    print('_'*60)
+    print(output.decode("utf-8") )
+    return template(output.decode("utf-8") )
+    exit_code = t.wait()
+    
+    
 if __name__ == '__main__':
     port = int(os.environ.get('PORT', 5000))
     debug = os.environ.get('DEBUG', False)
